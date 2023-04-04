@@ -66,7 +66,7 @@ export const createUser = async (req: Request, res: Response) => {
 				message: error.error.issues[0].message
 			});
 		}
-		console.log(req.body);
+	
 		const { fullName,email, password, dateOfBirth, gender, phone } =
 			req.body;
 		const existingUser = await User.findOne({
