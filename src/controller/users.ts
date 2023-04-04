@@ -93,7 +93,7 @@ export const createUser = async (req: Request, res: Response) => {
 		};
 		const newuser = new User(newUserData);
 		await newuser.save();
-		const link = `http://localhost:3000/api/v1/users/emailval/${newuser._id.toString()}/${token}`;
+		const link = `https://e-move-back-end.onrender.com/api/v1/users/emailval/${newuser._id.toString()}/${token}`;
 		const html = `<h1>Email Verification</h1>        <h2>Hello ${newuser.fullName}</h2>        <p>Please, click on link below to verify</p>        <div>        <a href=${link}>verify account</a>        </div>`;
 		await sendMail(newuser.email, 'Account verification', html);
 		return res.status(201).send({
