@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "nodemon ./bin/www",
+		"start": "node ./bin/www",
 		"dev": "tsc -w",
 		"lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
 		"format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
