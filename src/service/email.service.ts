@@ -22,7 +22,7 @@ export const requestPasswordResetService = async (email: string) => {
 	});
 	await token.save();
 
-	const link = `http://localhost:3000/api/v1/users/get-password/${user._id.toString()}/${resetToken}`;
+	const link = `https://e-move-back-end.onrender.com/api/v1/users/get-password/${user._id.toString()}/${resetToken}`;
 
 	const html = `<h1>Reset Password</h1>
   <h2>Hello ${user.fullName}</h2>
