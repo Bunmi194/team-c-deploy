@@ -33,7 +33,7 @@ export const getPasswordController = async (req: Request, res: Response) => {
 			res
 				.status(302)
 				.redirect(
-					`http://localhost:5173/resetpassword?userId=${req.params.userId}`
+					`https://e-move.onrender.com/resetpassword?userId=${req.params.userId}`
 				);
 		// res.send(getPasswordReset);
 	} catch (error) {
