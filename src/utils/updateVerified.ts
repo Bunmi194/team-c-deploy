@@ -10,7 +10,7 @@ export const updateVerified = async (req: Request, res: Response) => {
 			_id: req.params.id
 		});
 		if(user?.isVerified === true) {
-			return res.status(400).send("User already verified")
+			return res.status(302).redirect('https://e-move.onrender.com/#/login');
 		}
 		const token = req.params.token;
 		const decoded = await jwt.verify(token, secret);
