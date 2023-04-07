@@ -30,7 +30,7 @@ export const getPasswordController = async (req: Request, res: Response) => {
 			req.params.userId,
 			req.params.token
 		);
-			res
+			return res
 				.status(302)
 				.redirect(
 					`https://e-move.onrender.com/#/resetpassword?userId=${req.params.userId}`
