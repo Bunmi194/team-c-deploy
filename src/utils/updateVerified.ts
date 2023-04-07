@@ -26,7 +26,7 @@ export const updateVerified = async (req: Request, res: Response) => {
 		// 	path: req.url,
 		// 	message: `Email verified successfully`
 		// });
-		res.status(302).redirect('https://e-move.onrender.com/login');
+		res.status(302).redirect('https://e-move.onrender.com/#/login');
 	} catch (error) {
 		res.status(500).send({
 			status: 'error',
