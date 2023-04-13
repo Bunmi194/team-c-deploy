@@ -67,7 +67,7 @@ export const createUser = async (req: Request, res: Response) => {
 			});
 		}
 	
-		const { fullName,email, password, dateOfBirth, gender, phone } =
+		const { fullName, email, password, dateOfBirth, gender, phone } =
 			req.body;
 		const existingUser = await User.findOne({
 			email: email
@@ -300,7 +300,8 @@ export const engagePayment = async (
 				passengerId: userId,
 				transactionType: 'Credit',
 				status: '',
-				amount: form.amount
+				amount: form.amount,
+				initRef: response.data.reference
 			};
 
 			const transaction = new Transaction(newTransaction);
@@ -311,6 +312,7 @@ export const engagePayment = async (
 				message: 'Payment Engaged',
 				data: {
 					authorization_url: response.data.authorization_url,
+					response,
 					transaction
 				}
 			});
@@ -330,12 +332,11 @@ export const getReference = async (
 	res: Response
 ) => {
 	try {
-		const userId = req.user;
-		const transactionId = req.query.transactionId;
+		// const userId = req.user;
+		// const transactionId = req.query.transactionId;
 
 		const transaction = await Transaction.findOne({
-			passengerId: userId,
-			_id: transactionId
+			initRef: req.query.reference
 		});
 
 		if (transaction?.processed === true) {
@@ -383,37 +384,42 @@ export const getReference = async (
 				);
 
 				const updatedTransaction = await Transaction.findByIdAndUpdate(
-					{ _id: transactionId },
+					{ _id: transaction?._id },
 					{ processed: true, status: 'Accepted' },
 					{ new: true }
 				);
 
-				return res.status(200).send({
-					status: 'success',
-					message: 'Transaction accepted',
-					data: {
-						donor,
-						transaction: updatedTransaction
-					},
-					success: true
-				});
+				res.redirect('https://e-move.onrender.com/#/Userdashboard');
+
+				// return res.status(200).send({
+				// 	status: 'success',
+				// 	message: 'Transaction accepted',
+				// 	data: {
+				// 		donor,
+				// 		transaction: updatedTransaction
+				// 	},
+				// 	success: true
+				// });
 			} else {
 				const updatedTransaction = await Transaction.findByIdAndUpdate(
-					{ _id: transactionId },
+					{ _id: transaction?._id },
 					{ processed: true, status: 'Declined' },
 					{ new: true }
 				);
 
-				return res.status(401).send({
-					status: 'error',
-					path: req.url,
-					message: 'Transport declined',
-					data: {
-						donor,
-						transaction: updatedTransaction
-					},
-					success: false
-				});
+				res.redirect('https://e-move.onrender.com/#/Userdashboard');
+
+
+				// return res.status(401).send({
+				// 	status: 'error',
+				// 	path: req.url,
+				// 	message: 'Transport declined',
+				// 	data: {
+				// 		donor,
+				// 		transaction: updatedTransaction
+				// 	},
+				// 	success: false
+				// });
 			}
 		});
 	} catch (error) {

@@ -40,6 +40,6 @@ router.get(
 router.get('/getAllPassengerTrips', authenticateToken, getAllPassengerTrips)
 
 router.post('/paystack/pay', authenticateToken, engagePayment);
-router.get('/paystack/callback', authenticateToken, getReference);
+router.get('/paystack/callback', getReference);
 
 export default router;

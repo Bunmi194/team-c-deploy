@@ -20,6 +20,10 @@ const transactionSchema = new mongoose.Schema(
 		processed: {
 			type: Boolean,
 			default: false
+		},
+		initRef: {
+			type: String,
+			required: true
 		}
 	},
 	{
