@@ -47,27 +47,39 @@ export const addDriver = async (req: Request, res: Response) => {
 		};
 		const newDriver = new Driver(newDriverData);
 
-		if (
-			(req.files && typeof req.files === 'object' && 'validId' in req.files) ||
-			(req.files && typeof req.files === 'object' && 'photo' in req.files)
-		) {
-			const validIdResult = await cloudinary.uploader.upload(
-				req.files.validId[0].path
-			);
+		// if (
+		// 	(req.files && typeof req.files === 'object' && 'validId' in req.files) ||
+		// 	(req.files && typeof req.files === 'object' && 'photo' in req.files)
+		// ) {
+		// 	const validIdResult = await cloudinary.uploader.upload(
+		// 		req.files.validId[0].path
+		// 	);
+
+		const PhotoResult = await cloudinary.uploader.upload(req.body.photo, {
+			allowed_formats: ['jpg', 'png', 'svg', 'jpeg'],
+			public_id: '',
+			folder: 'emove'
+		});
+		const validIdResult = await cloudinary.uploader.upload(req.body.validId, {
+			allowed_formats: ['jpg', 'png', 'svg', 'jpeg'],
+			public_id: '',
+			folder: 'emove'
+		});
 
 			newDriver.validId.push({
 				validId_img: validIdResult.secure_url,
 				cloudinary_id: validIdResult.public_id
 			});
-			const PhotoResult = await cloudinary.uploader.upload(
-				req.files.photo[0].path
-			);
+		
+			// const PhotoResult = await cloudinary.uploader.upload(
+			// 	req.files.photo[0].path
+			// );
 
 			newDriver.photo.push({
 				profile_img: PhotoResult.secure_url,
 				cloudinary_id: PhotoResult.public_id
 			});
-		}
+		// }
 
 		await newDriver.save();
 		return res.status(201).send({
@@ -122,16 +134,27 @@ export const editDriver = async (req: Request, res: Response) => {
 			});
 		}
 
-		if (
-			(req.files && typeof req.files === 'object' && 'validId' in req.files) ||
-			(typeof req.files === 'object' && 'photo' in req.files)
-		) {
-			const validIdResult = await cloudinary.uploader.upload(
-				req.files.validId[0].path
-			);
-			const PhotoResult = await cloudinary.uploader.upload(
-				req.files.photo[0].path
-			);
+		// if (
+		// 	(req.files && typeof req.files === 'object' && 'validId' in req.files) ||
+		// 	(typeof req.files === 'object' && 'photo' in req.files)
+		// ) {
+		// 	const validIdResult = await cloudinary.uploader.upload(
+		// 		req.files.validId[0].path
+		// 	);
+		// 	const PhotoResult = await cloudinary.uploader.upload(
+		// 		req.files.photo[0].path
+		// 	);
+
+		const PhotoResult = await cloudinary.uploader.upload(req.body.photo, {
+			allowed_formats: ['jpg', 'png', 'svg', 'jpeg'],
+			public_id: '',
+			folder: 'emove'
+		});
+		const validIdResult = await cloudinary.uploader.upload(req.body.validId, {
+			allowed_formats: ['jpg', 'png', 'svg', 'jpeg'],
+			public_id: '',
+			folder: 'emove'
+		});
 
 			const newDriverData = {
 				fullName,
@@ -163,14 +186,14 @@ export const editDriver = async (req: Request, res: Response) => {
 				message: `Driver Details Updated successfully`,
 				data: updatedDriver
 			});
-		} else {
-			return res.status(401).send({
-				status: 'error',
-				path: req.url,
-				message: `Driver images not found `,
-				success: false
-			});
-		}
+		// } else {
+		// 	return res.status(401).send({
+		// 		status: 'error',
+		// 		path: req.url,
+		// 		message: `Driver images not found `,
+		// 		success: false
+		// 	});
+		// }
 	} catch (error) {
 		return res.status(400).send({
 			status: 'error',
