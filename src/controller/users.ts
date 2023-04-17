@@ -299,7 +299,7 @@ export const engagePayment = async (
 			const newTransaction = {
 				passengerId: userId,
 				transactionType: 'Credit',
-				status: '',
+				// status: '',
 				amount: form.amount,
 				initRef: response.data.reference
 			};
@@ -389,7 +389,7 @@ export const getReference = async (
 					{ new: true }
 				);
 
-				res.redirect('https://e-move.onrender.com/#/Userdashboard');
+				res.redirect('https://e-move.onrender.com/#/userDashboard');
 
 				// return res.status(200).send({
 				// 	status: 'success',
@@ -407,7 +407,7 @@ export const getReference = async (
 					{ new: true }
 				);
 
-				res.redirect('https://e-move.onrender.com/#/Userdashboard');
+				res.redirect('https://e-move.onrender.com/#/userDashboard');
 
 
 				// return res.status(401).send({
@@ -487,6 +487,29 @@ export const getAllPassengerTrips = async (req: Request, res: Response) => {
 			status: 'error',
 			path: req.url,
 			message: 'Error Getting Passenger Trips',
+			success: false
+		});
+	}
+};
+
+export const getUser = async (req: Request, res: Response) => {
+	try {
+		const userId = req.user;
+		const existingUser = await User.findById(userId);
+
+		if (!existingUser) {
+			return res.status(404).send({
+				success: false,
+				message: 'User not found'
+			});
+		}
+
+		return res.status(200).send({
+			data: existingUser
+		});
+	} catch (error) {
+		res.status(500).send({
+			status: 'error',
 			success: false
 		});
 	}

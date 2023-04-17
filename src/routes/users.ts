@@ -7,7 +7,8 @@ import {
 	engagePayment,
 	getReference,
 	transactionHistory,
-	getAllPassengerTrips
+	getAllPassengerTrips,
+	getUser
 } from '../controller/users';
 
 import {
@@ -41,5 +42,6 @@ router.get('/getAllPassengerTrips', authenticateToken, getAllPassengerTrips)
 
 router.post('/paystack/pay', authenticateToken, engagePayment);
 router.get('/paystack/callback', getReference);
+router.get('/getuser', authenticateToken, getUser);
 
 export default router;

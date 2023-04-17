@@ -7,7 +7,8 @@ const transactionSchema = new mongoose.Schema(
 			required: true
 		},
 		status: {
-			type: String
+			type: String,
+			default: 'Declined'
 		},
 		passengerId: {
 			type: String,
