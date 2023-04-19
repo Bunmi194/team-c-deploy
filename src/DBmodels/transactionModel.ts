@@ -23,8 +23,7 @@ const transactionSchema = new mongoose.Schema(
 			default: false
 		},
 		initRef: {
-			type: String,
-			required: true
+			type: String
 		}
 	},
 	{
