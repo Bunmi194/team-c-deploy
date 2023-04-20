@@ -334,7 +334,7 @@ export const totalSucRides = async (req: Request, res: Response) => {
 				.send({ message: 'User is not an Admin', success: false });
 		}
 		
-		const count = await Ride.countDocuments({ isSuccessful: true });
+		const count = await Ride.countDocuments();
 		return res.status(201).send({
 			status: 'success',
 			path: req.url,
